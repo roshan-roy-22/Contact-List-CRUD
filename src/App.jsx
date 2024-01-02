@@ -2,15 +2,14 @@ import "./App.css";
 import Header from "./components/Header";
 import AddContact from "./components/AddContact";
 import ContactList from "./components/ContactList";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
-import {  Route,Routes  } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ContactDetails from "./components/ContactDetails";
-import api from '../src/api/contacts'
-
+import api from "../src/api/contacts";
+import EditContact from "./components/EditContact";
 
 function App() {
-  
   const LOCAL_STORAGE_KEY = "contacts";
   const [contacts, setContacts] = useState(
     JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
@@ -21,7 +20,6 @@ function App() {
       id: uuid(),
       ...contact,
     };
-
     const response = await api.post("/contact", request);
     console.log(response);
     setContacts([...contacts, response.data]);
@@ -36,14 +34,15 @@ function App() {
     setContacts(newContactList);
   };
 
-  // useEffect(() => {
-  //   // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
-  //   const getAllcontacts= async ()=>{
-  //     const allContacts=await retrieveContacts();
-  //    if(allContacts) setContacts(allContacts);
-  //   }
-  //   getAllcontacts();
-  // }, []);
+  const updateContactHandler = async (contact) => {
+    const response = await api.put(`/contact/${contact.id}`, contact);
+    const { id, name, email } = response.data;
+    setContacts(
+      contacts.map((contact) => {
+        return contact.id === id ? { ...response.data } : contact;
+      })
+    );
+  };
 
   //RetrieveContacts
   const retrieveContacts = async () => {
@@ -55,8 +54,6 @@ function App() {
   };
 
   useEffect(() => {
-    // const retriveContacts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-    // if (retriveContacts) setContacts(retriveContacts);
     const getAllCOntacts = async () => {
       const allContacts = await retrieveContacts();
       if (allContacts) setContacts(allContacts);
@@ -65,19 +62,30 @@ function App() {
     getAllCOntacts();
   }, []);
 
-
   return (
     <div className=" container">
       <Header />
       <Routes>
-      <Route path="/" element={<ContactList contacts={contacts} getContactId={removeContactHandler}/>} />
-      <Route path="/add" element={<AddContact addContactHandler={addContactHandler} />}/>
-      <Route path="/contact/:id" element={<ContactDetails/>}/>
+        <Route
+          path="/"
+          element={
+            <ContactList
+              contacts={contacts}
+              getContactId={removeContactHandler}
+            />
+          }
+        />
+        <Route
+          path="/add"
+          element={<AddContact addContactHandler={addContactHandler} />}
+        />
+         <Route
+          path="/edit"
+          element={<EditContact updateContactHandler={updateContactHandler} />}
+        />
+        <Route path="/contact/:id" element={<ContactDetails />} />
       </Routes>
-
-      {/* 
-      <AddContact addContactHandler={addContactHandler} />
-      <ContactList contacts={contacts} getContactId={removeContactHandler} /> */}
+      
     </div>
   );
 }

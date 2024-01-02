@@ -29,10 +29,15 @@ function ContactCard(props) {
             </div>
           </Link>
         </div>
-        <div>
+        <div className="d-flex gap-3  ">
           <Button variant="danger" onClick={() => props.clickHandler(id)}>
             <i className="fas fa-trash"></i>
           </Button>
+         <Link to={`/edit`} state={props.contact}>
+           <Button variant="info" >
+           <i class="fa-solid fa-pen-to-square"></i>
+           </Button>
+         </Link >
         </div>
       </ListGroup.Item>
     </div>
