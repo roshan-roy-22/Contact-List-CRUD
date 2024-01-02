@@ -10,10 +10,7 @@ import api from "../src/api/contacts";
 import EditContact from "./components/EditContact";
 
 function App() {
-  const LOCAL_STORAGE_KEY = "contacts";
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
-  );
+  const [contacts, setContacts] = useState([]);
   const addContactHandler = async (contact) => {
     console.log(contact);
     const request = {
@@ -79,13 +76,12 @@ function App() {
           path="/add"
           element={<AddContact addContactHandler={addContactHandler} />}
         />
-         <Route
+        <Route
           path="/edit"
           element={<EditContact updateContactHandler={updateContactHandler} />}
         />
         <Route path="/contact/:id" element={<ContactDetails />} />
       </Routes>
-      
     </div>
   );
 }
