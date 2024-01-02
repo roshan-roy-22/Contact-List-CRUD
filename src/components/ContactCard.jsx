@@ -4,7 +4,7 @@ import { ListGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function ContactCard(props) {
-  const { id, name, email } = props.contact;
+  const { id, name, email, image } = props.contact;
   const linkStyle = {
     textDecoration: "none",
     color: "inherit",
@@ -17,9 +17,9 @@ function ContactCard(props) {
       <ListGroup.Item className="d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center gap-2">
           <img
-            style={{ height: "60px" }}
-            className="img-fluid"
-            src={user}
+            style={{ height: "60px", width: "60px" }}
+            className=" rounded-circle "
+            src={image || user}
             alt="user"
           />
           <Link style={linkStyle} to={`/contact/${id}`} state={props.contact}>
@@ -33,11 +33,11 @@ function ContactCard(props) {
           <Button variant="danger" onClick={() => props.clickHandler(id)}>
             <i className="fas fa-trash"></i>
           </Button>
-         <Link to={`/edit`} state={props.contact}>
-           <Button variant="info" >
-           <i class="fa-solid fa-pen-to-square"></i>
-           </Button>
-         </Link >
+          <Link to={`/edit`} state={props.contact}>
+            <Button variant="success">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </Button>
+          </Link>
         </div>
       </ListGroup.Item>
     </div>

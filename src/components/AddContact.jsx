@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function AddContact({addContactHandler}) {
+function AddContact({ addContactHandler }) {
   const navigate = useNavigate();
   const [state, setState] = useState({
     name: "",
     email: "",
+    image: "",
   });
   const add = (e) => {
     e.preventDefault();
@@ -15,7 +16,7 @@ function AddContact({addContactHandler}) {
       return;
     }
     addContactHandler(state);
-    setState({ name: "", email: "" });
+    setState({ name: "", email: "" ,image:""});
     navigate("/");
   };
   return (
@@ -40,6 +41,16 @@ function AddContact({addContactHandler}) {
             placeholder="Email"
             value={state.email}
             onChange={(e) => setState({ ...state, email: e.target.value })}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Image</Form.Label>
+          <Form.Control
+            type="text"
+            name="image-url"
+            placeholder="image"
+            value={state.image}
+            onChange={(e) => setState({ ...state, image: e.target.value })}
           />
         </Form.Group>
         <Button type="submit" className="px-3 " variant="primary">

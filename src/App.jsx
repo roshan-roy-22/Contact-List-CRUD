@@ -11,16 +11,21 @@ import EditContact from "./components/EditContact";
 
 function App() {
   const [contacts, setContacts] = useState([]);
+
+  //Function to add contacts
   const addContactHandler = async (contact) => {
     console.log(contact);
     const request = {
       id: uuid(),
       ...contact,
     };
+    //post
     const response = await api.post("/contact", request);
     console.log(response);
     setContacts([...contacts, response.data]);
   };
+
+  //function to remove contact by id 
 
   const removeContactHandler = async (id) => {
     await api.delete(`/contact/${id}`);
@@ -31,9 +36,11 @@ function App() {
     setContacts(newContactList);
   };
 
+  //function to update uthe conatcts
+
   const updateContactHandler = async (contact) => {
     const response = await api.put(`/contact/${contact.id}`, contact);
-    const { id, name, email } = response.data;
+    const { id } = response.data;
     setContacts(
       contacts.map((contact) => {
         return contact.id === id ? { ...response.data } : contact;

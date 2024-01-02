@@ -1,0 +1,30 @@
+----This a simple crud operation react application----
+opertation:-
+-Create contacts
+-Read contacts from json server
+-Update contacts 
+-Delete contacts
+
+--user third party modules
+
+-react router dom:For  used for handling navigation and routing in React applications, 
+ enabling the creation of single-page applications with multiple views or pages.
+
+ npm install react-router-dom
+
+
+ -axios:Axios is a JavaScript library used for making HTTP requests from the browser or Node.js. 
+  It provides a simple and consistent interface for interacting with APIs. In summary, 
+  Axios is used for sending and receiving data over HTTP.
+
+  npm install axios
+  
+ -react-bootstrap:For style
+
+npm install react-bootstrap bootstrap
+
+ -uuid:t is a standard for generating unique identifiers that are unique across both time and space. 
+ In JavaScript, the uuid library is often used to generate UUIDs
+
+ npm install uuid
+ 

@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import {  useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 
 const EditContact = ({ updateContactHandler }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-
-  
   const [contact, setContact] = useState({
     id: "",
     name: "",
     email: "",
+    image: "",
   });
 
   useEffect(() => {
-    const { id, name, email } = location.state;
-    setContact({ id, name, email });
+    const { id, name, email, image } = location.state;
+    setContact({ id, name, email, image });
   }, [location.state]);
 
   const update = (e) => {
@@ -26,7 +25,7 @@ const EditContact = ({ updateContactHandler }) => {
       return;
     }
     updateContactHandler(contact);
-    setContact({ id: "", name: "", email: "" });
+    setContact({ id: "", name: "", email: "", image: "" });
     navigate("/");
   };
 
@@ -51,6 +50,16 @@ const EditContact = ({ updateContactHandler }) => {
             placeholder="Email"
             value={contact.email}
             onChange={(e) => setContact({ ...contact, email: e.target.value })}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Image</Form.Label>
+          <Form.Control
+            type="text"
+            name="image-url"
+            placeholder="image"
+            value={contact.image}
+            onChange={(e) => setContact({ ...contact, image: e.target.value })}
           />
         </Form.Group>
 
